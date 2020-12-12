@@ -1,36 +1,48 @@
 package com.cg.employeepayrollapp.model;
 
+import java.io.Serializable;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
 import com.cg.employeepayrollapp.dto.EmployeePayrollDTO;
 
-public class EmployeePayrollData {
+@Entity
+@Table(name = "employee_payroll_data")
+public class EmployeePayrollData implements Serializable {
+	private static final long serialVersionUID = 1L;
 
-	private long salary;
-	private int employeeId;
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Column(name = "id")
+	private long id;
+
+	@Column(name = "name")
 	private String name;
+
+	@Column(name = "basic_pay")
+	private double salary;
 
 	public EmployeePayrollData() {
 	}
 
-	public EmployeePayrollData(int empId, EmployeePayrollDTO empPayrollDTO) {
-		this.employeeId = empId;
+	public EmployeePayrollData(EmployeePayrollDTO empPayrollDTO) {
+		// this.id = empId;
 		this.name = empPayrollDTO.name;
 		this.salary = empPayrollDTO.salary;
+
 	}
 
-	public long getSalary() {
-		return salary;
+	public long getId() {
+		return id;
 	}
 
-	public void setSalary(long salary) {
-		this.salary = salary;
-	}
-
-	public int getEmployeeId() {
-		return employeeId;
-	}
-
-	public void setEmployeeId(int employeeId) {
-		this.employeeId = employeeId;
+	public void setId(long id) {
+		this.id = id;
 	}
 
 	public String getName() {
@@ -41,4 +53,11 @@ public class EmployeePayrollData {
 		this.name = name;
 	}
 
+	public double getSalary() {
+		return salary;
+	}
+
+	public void setSalary(double salary) {
+		this.salary = salary;
+	}
 }

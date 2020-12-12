@@ -1,17 +1,21 @@
 package com.cg.employeepayrollapp.dto;
 
-public class EmployeePayrollDTO {
-	public String name;
-	public long salary;
+import javax.persistence.Id;
 
-	public EmployeePayrollDTO(String name, long salary) {
+public class EmployeePayrollDTO {
+	@Id
+	private long id;
+	public String name;
+	public double salary;
+
+	public EmployeePayrollDTO(String name, double salary) {
 		this.name = name;
 		this.salary = salary;
 	}
 
 	@Override
 	public String toString() {
-		return "EmployeePayrollDTO [name=" + name + ", salary=" + salary + "]";
+		return "EmployeePayrollDTO [employeeId=" + id + ", name=" + name + ", salary=" + salary + "]";
 	}
 
 }
