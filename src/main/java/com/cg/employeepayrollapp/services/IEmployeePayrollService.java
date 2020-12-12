@@ -7,13 +7,13 @@ import com.cg.employeepayrollapp.model.EmployeePayrollData;
 
 public interface IEmployeePayrollService {
 
-	List<EmployeePayrollData> getEmployeePayrollData();
+	List<EmployeePayrollData> getAllEmployeePayrollData();
 
-	EmployeePayrollData getEmployeePayrollDataById(int empId);
+	EmployeePayrollData getEmployeePayrollDataById(long empId);
 
 	EmployeePayrollData createEmployeePayrollData(EmployeePayrollDTO empPayrollDTO);
 
-	EmployeePayrollData updateEmployeePayrollData(int empId, EmployeePayrollDTO empPayrollDTO);
+	EmployeePayrollData updateEmployeePayrollData(long empId, EmployeePayrollDTO empPayrollDTO);
 
-	void deleteEmployeePayrollData(int empId);
+	void deleteEmployeePayrollData(long empId);
 }
