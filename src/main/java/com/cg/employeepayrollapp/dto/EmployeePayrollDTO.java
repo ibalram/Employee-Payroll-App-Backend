@@ -4,7 +4,6 @@ import javax.persistence.Id;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.Pattern;
-import javax.validation.constraints.Size;
 
 public class EmployeePayrollDTO {
 	@Id
@@ -26,5 +25,4 @@ public class EmployeePayrollDTO {
 	public String toString() {
 		return "EmployeePayrollDTO [employeeId=" + id + ", name=" + name + ", salary=" + salary + "]";
 	}
-
 }
