@@ -46,7 +46,8 @@ public class EmployeePayrollData implements Serializable {
 		this.name = empPayrollDTO.name;
 		this.salary = empPayrollDTO.salary;
 		this.gender = empPayrollDTO.gender;
-		this.startDate = LocalDate.parse(empPayrollDTO.startDate);
+		this.startDate = empPayrollDTO.startDate;
+		this.note = empPayrollDTO.note;
 		this.profilePic = empPayrollDTO.profilePic;
 		this.departments = empPayrollDTO.department;
 

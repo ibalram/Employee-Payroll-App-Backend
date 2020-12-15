@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -15,22 +16,23 @@ import com.cg.employeepayrollapp.dto.ResponseDTO;
 
 @ControllerAdvice
 public class GlobalExceptionHandler {
+	private static final String message = "Exception while processing REST Request";
 
 	@ExceptionHandler(NotFoundException.class)
 	public final ResponseEntity<ResponseDTO> employeeNotFoundException(NotFoundException e) {
-		ResponseDTO status = new ResponseDTO("Exception: ", e.getMessage());
+		ResponseDTO status = new ResponseDTO(message, e.getMessage());
 		return new ResponseEntity<ResponseDTO>(status, HttpStatus.NOT_FOUND);
 	}
 
 	@ExceptionHandler(DataMissingException.class)
 	public final ResponseEntity<ResponseDTO> dataMissingException(DataMissingException e) {
-		ResponseDTO status = new ResponseDTO("Exception: ", e.getMessage());
+		ResponseDTO status = new ResponseDTO(message, e.getMessage());
 		return new ResponseEntity<ResponseDTO>(status, HttpStatus.NOT_ACCEPTABLE);
 	}
 	
 	@ExceptionHandler(NoSuchElementException.class)
 	public final ResponseEntity<ResponseDTO> noElementException(NoSuchElementException e) {
-		ResponseDTO status = new ResponseDTO("Exception: ", e.getMessage());
+		ResponseDTO status = new ResponseDTO(message, e.getMessage());
 		return new ResponseEntity<ResponseDTO>(status, HttpStatus.NO_CONTENT);
 	}
 	
@@ -38,13 +40,19 @@ public class GlobalExceptionHandler {
 	public ResponseEntity<ResponseDTO> handleValidationExceptions(MethodArgumentNotValidException exception){
 		List<ObjectError> errorList = exception.getBindingResult().getAllErrors();
 		List<String> errMsg = errorList.stream().map(objErr -> objErr.getDefaultMessage()).collect(Collectors.toList());
-		ResponseDTO response = new ResponseDTO("Exceptions: ",errMsg);
+		ResponseDTO response = new ResponseDTO(message,errMsg);
 		return new ResponseEntity<ResponseDTO>(response,HttpStatus.BAD_REQUEST);
 	}
 	
 	@ExceptionHandler(Exception.class)
 	public final ResponseEntity<ResponseDTO> anonymousException(Exception e) {
-		ResponseDTO status = new ResponseDTO("Exception: ", e.getMessage());
+		ResponseDTO status = new ResponseDTO(message, e.getMessage());
 		return new ResponseEntity<ResponseDTO>(status, HttpStatus.BAD_REQUEST);
+	}
+	
+	@ExceptionHandler(HttpMessageNotReadableException.class)
+	public ResponseEntity<ResponseDTO> handleHttpMessageNotReadableException(HttpMessageNotReadableException exception){
+		ResponseDTO respDTO = new ResponseDTO(message, "Should have date in format dd MM yyyy");
+		return new ResponseEntity<ResponseDTO>(respDTO, HttpStatus.BAD_REQUEST);
 	}
 }
