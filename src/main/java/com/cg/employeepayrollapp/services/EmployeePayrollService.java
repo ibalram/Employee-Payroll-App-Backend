@@ -21,7 +21,7 @@ public class EmployeePayrollService implements IEmployeePayrollService {
 		return employeePayrollRepository.findAll().stream().collect(Collectors.toList());
 	}
 
-	public EmployeePayrollData getEmployeePayrollDataById(long empId) {
+	public EmployeePayrollData getEmployeePayrollDataById(Long empId) {
 		EmployeePayrollData empPayrollData = employeePayrollRepository.findById(empId).orElseThrow(() -> new EmployeePayrollException("Not Found"));
 		return empPayrollData;
 	}
@@ -32,7 +32,7 @@ public class EmployeePayrollService implements IEmployeePayrollService {
 		return empData;
 	}
 
-	public EmployeePayrollData updateEmployeePayrollData(long empId, EmployeePayrollDTO empPayrollDTO){
+	public EmployeePayrollData updateEmployeePayrollData(Long empId, EmployeePayrollDTO empPayrollDTO){
 		EmployeePayrollData empData = this.getEmployeePayrollDataById(empId);
 		empData.setName(empPayrollDTO.name);
 		empData.setSalary(empPayrollDTO.salary);
@@ -45,7 +45,7 @@ public class EmployeePayrollService implements IEmployeePayrollService {
 		return empData;
 	}
 
-	public void deleteEmployeePayrollData(long empId){
+	public void deleteEmployeePayrollData(Long empId){
 		EmployeePayrollData empData = this.getEmployeePayrollDataById(empId);
 		employeePayrollRepository.deleteById(empData.getId());
 	}
