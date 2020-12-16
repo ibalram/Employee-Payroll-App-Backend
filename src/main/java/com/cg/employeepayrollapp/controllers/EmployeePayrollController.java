@@ -30,32 +30,36 @@ public class EmployeePayrollController {
 
 	@RequestMapping(value = { "", "/", "/get" })
 	public ResponseEntity<ResponseDTO> getEmployeePayrollData() {
-		List<EmployeePayrollData> empDataList = null;
-		empDataList = employeePayrollService.getAllEmployeePayrollData();
+		List<EmployeePayrollData> empDataList = employeePayrollService.getAllEmployeePayrollData();
 		ResponseDTO respDTO = new ResponseDTO("Get Call Successful", empDataList);
 		return new ResponseEntity<ResponseDTO>(respDTO, HttpStatus.OK);
 	}
 
 	@GetMapping("/get/{empId}")
 	public ResponseEntity<ResponseDTO> getEmployeePayrollData(@PathVariable("empId") Long empId) {
-		EmployeePayrollData empData = null;
-		empData = employeePayrollService.getEmployeePayrollDataById(empId);
+		EmployeePayrollData empData = employeePayrollService.getEmployeePayrollDataById(empId);
 		ResponseDTO respDTO = new ResponseDTO("Get Call for ID Successful", empData);
+		return new ResponseEntity<ResponseDTO>(respDTO, HttpStatus.OK);
+	}
+
+	@GetMapping("/department/{department}")
+	public ResponseEntity<ResponseDTO> getEmployeePayrollData(@PathVariable("department") String department) {
+		List<EmployeePayrollData> empDataList = employeePayrollService.getEmployeesByDepartment(department);
+		ResponseDTO respDTO = new ResponseDTO("Get Call for ID Successful", empDataList);
 		return new ResponseEntity<ResponseDTO>(respDTO, HttpStatus.OK);
 	}
 
 	@PostMapping("/create")
 	public ResponseEntity<ResponseDTO> addEmployeePayrollData(@Valid @RequestBody EmployeePayrollDTO empPayrollDTO) {
-		EmployeePayrollData empData = null;
-		empData = employeePayrollService.createEmployeePayrollData(empPayrollDTO);
+		EmployeePayrollData empData = employeePayrollService.createEmployeePayrollData(empPayrollDTO);
 		ResponseDTO respDTO = new ResponseDTO("Created Employee Payroll Data Successfully", empData);
 		return new ResponseEntity<ResponseDTO>(respDTO, HttpStatus.OK);
 	}
 
 	@PutMapping("/update/{empId}")
-	public ResponseEntity<ResponseDTO> updateEmployeePayrollData(@PathVariable("empId") Long empId, @Valid @RequestBody EmployeePayrollDTO empPayrollDTO) {
-		EmployeePayrollData empData = null;
-		empData = employeePayrollService.updateEmployeePayrollData(empId, empPayrollDTO);
+	public ResponseEntity<ResponseDTO> updateEmployeePayrollData(@PathVariable("empId") Long empId,
+			@Valid @RequestBody EmployeePayrollDTO empPayrollDTO) {
+		EmployeePayrollData empData = employeePayrollService.updateEmployeePayrollData(empId, empPayrollDTO);
 		ResponseDTO respDTO = new ResponseDTO("Updated Employee Payroll Data Successfully", empData);
 		return new ResponseEntity<ResponseDTO>(respDTO, HttpStatus.OK);
 	}
