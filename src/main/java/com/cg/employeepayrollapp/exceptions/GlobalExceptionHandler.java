@@ -1,7 +1,6 @@
 package com.cg.employeepayrollapp.exceptions;
 
 import java.util.List;
-import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
 import org.springframework.http.HttpStatus;
@@ -18,22 +17,10 @@ import com.cg.employeepayrollapp.dto.ResponseDTO;
 public class GlobalExceptionHandler {
 	private static final String message = "Exception while processing REST Request";
 
-	@ExceptionHandler(NotFoundException.class)
-	public final ResponseEntity<ResponseDTO> employeeNotFoundException(NotFoundException e) {
+	@ExceptionHandler(EmployeePayrollException.class)
+	public final ResponseEntity<ResponseDTO> employeeNotFoundException(EmployeePayrollException e) {
 		ResponseDTO status = new ResponseDTO(message, e.getMessage());
 		return new ResponseEntity<ResponseDTO>(status, HttpStatus.NOT_FOUND);
-	}
-
-	@ExceptionHandler(DataMissingException.class)
-	public final ResponseEntity<ResponseDTO> dataMissingException(DataMissingException e) {
-		ResponseDTO status = new ResponseDTO(message, e.getMessage());
-		return new ResponseEntity<ResponseDTO>(status, HttpStatus.NOT_ACCEPTABLE);
-	}
-	
-	@ExceptionHandler(NoSuchElementException.class)
-	public final ResponseEntity<ResponseDTO> noElementException(NoSuchElementException e) {
-		ResponseDTO status = new ResponseDTO(message, e.getMessage());
-		return new ResponseEntity<ResponseDTO>(status, HttpStatus.NO_CONTENT);
 	}
 	
 	@ExceptionHandler(MethodArgumentNotValidException.class)

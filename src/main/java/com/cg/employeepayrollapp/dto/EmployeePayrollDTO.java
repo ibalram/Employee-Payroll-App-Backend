@@ -3,7 +3,6 @@ package com.cg.employeepayrollapp.dto;
 import java.time.LocalDate;
 import java.util.List;
 
-import javax.persistence.Id;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
@@ -17,9 +16,6 @@ import lombok.ToString;
 
 @ToString
 public class EmployeePayrollDTO {
-	
-	@Id
-	private Long id;
 	
 	@Pattern(regexp = "^[A-Z]{1}[a-zA-Z\\s]{2,}$", message = "Name is invalid")
 	public String name;

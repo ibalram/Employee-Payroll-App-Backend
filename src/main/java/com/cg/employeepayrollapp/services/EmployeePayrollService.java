@@ -7,18 +7,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.cg.employeepayrollapp.dto.EmployeePayrollDTO;
-import com.cg.employeepayrollapp.exceptions.DataMissingException;
-import com.cg.employeepayrollapp.exceptions.NotFoundException;
+import com.cg.employeepayrollapp.exceptions.EmployeePayrollException;
 import com.cg.employeepayrollapp.model.EmployeePayrollData;
 import com.cg.employeepayrollapp.repository.EmployeePayrollRepository;
 
 @Service
 public class EmployeePayrollService implements IEmployeePayrollService {
-
-	// private List<EmployeePayrollData> employeePayrollList = new ArrayList<>();
-	// public List<EmployeePayrollData> getEmployeePayrollData() {
-	// return employeePayrollList;
-	// }
 
 	@Autowired
 	private EmployeePayrollRepository employeePayrollRepository;
@@ -28,35 +22,31 @@ public class EmployeePayrollService implements IEmployeePayrollService {
 	}
 
 	public EmployeePayrollData getEmployeePayrollDataById(long empId) {
-		EmployeePayrollData empPayrollData = employeePayrollRepository.findById(empId).get();
+		EmployeePayrollData empPayrollData = employeePayrollRepository.findById(empId).orElseThrow(() -> new EmployeePayrollException("Not Found"));
 		return empPayrollData;
 	}
 
-	public EmployeePayrollData createEmployeePayrollData(EmployeePayrollDTO empPayrollDTO) throws DataMissingException{
-		EmployeePayrollData empData = null;
-		// empData = new EmployeePayrollData(employeePayrollList.size() + 1,
-		// empPayrollDTO);
-		if (empPayrollDTO.name == null || empPayrollDTO.salary.equals(null))
-			throw new DataMissingException("Data missing");
-		empData = new EmployeePayrollData(empPayrollDTO);
+	public EmployeePayrollData createEmployeePayrollData(EmployeePayrollDTO empPayrollDTO){
+		EmployeePayrollData empData = new EmployeePayrollData(empPayrollDTO);
 		employeePayrollRepository.save(empData);
 		return empData;
 	}
 
-	public EmployeePayrollData updateEmployeePayrollData(long empId, EmployeePayrollDTO empPayrollDTO) throws DataMissingException {
+	public EmployeePayrollData updateEmployeePayrollData(long empId, EmployeePayrollDTO empPayrollDTO){
 		EmployeePayrollData empData = this.getEmployeePayrollDataById(empId);
-		if (empPayrollDTO.name == null || empPayrollDTO.salary.equals(null))
-			throw new DataMissingException("Data missing");
 		empData.setName(empPayrollDTO.name);
 		empData.setSalary(empPayrollDTO.salary);
+		empData.setGender(empPayrollDTO.gender);
+		empData.setStartDate(empPayrollDTO.startDate);
+		empData.setNote(empPayrollDTO.note);
+		empData.setProfilePic(empPayrollDTO.profilePic);
+		empData.setDepartments(empPayrollDTO.department);
 		employeePayrollRepository.save(empData);
 		return empData;
 	}
 
-	public void deleteEmployeePayrollData(long empId) throws NotFoundException {
+	public void deleteEmployeePayrollData(long empId){
 		EmployeePayrollData empData = this.getEmployeePayrollDataById(empId);
-		if (empData == null)
-			throw new NotFoundException("Not Found");
 		employeePayrollRepository.deleteById(empData.getId());
 	}
 }
