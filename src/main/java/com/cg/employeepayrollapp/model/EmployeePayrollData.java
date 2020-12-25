@@ -15,6 +15,7 @@ import javax.persistence.Table;
 import javax.persistence.JoinColumn;
 
 import com.cg.employeepayrollapp.dto.EmployeePayrollDTO;
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 import lombok.Data;
 
@@ -37,6 +38,7 @@ public class EmployeePayrollData implements Serializable {
 
 	private String gender;
 	
+	@JsonFormat(pattern = "dd MMM yyyy")
 	@Column(name = "start_date")
 	private LocalDate startDate;
 	private String note;
@@ -45,7 +47,7 @@ public class EmployeePayrollData implements Serializable {
 	@ElementCollection
 	@CollectionTable(name="employee_department", joinColumns = @JoinColumn(name = "id"))
 	@Column(name = "department")
-	private List<String> departments;
+	private List<String> department;
 	
 
 	public EmployeePayrollData() {
@@ -58,7 +60,7 @@ public class EmployeePayrollData implements Serializable {
 		this.startDate = empPayrollDTO.startDate;
 		this.note = empPayrollDTO.note;
 		this.profilePic = empPayrollDTO.profilePic;
-		this.departments = empPayrollDTO.department;
+		this.department = empPayrollDTO.department;
 
 	}
 }

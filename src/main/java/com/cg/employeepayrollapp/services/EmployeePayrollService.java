@@ -44,7 +44,7 @@ public class EmployeePayrollService implements IEmployeePayrollService {
 		empData.setStartDate(empPayrollDTO.startDate);
 		empData.setNote(empPayrollDTO.note);
 		empData.setProfilePic(empPayrollDTO.profilePic);
-		empData.setDepartments(empPayrollDTO.department);
+		empData.setDepartment(empPayrollDTO.department);
 		employeePayrollRepository.save(empData);
 		return empData;
 	}
