@@ -20,8 +20,8 @@ public class EmployeePayrollDTO {
 	@Pattern(regexp = "^[A-Z]{1}[a-zA-Z\\s]{2,}$", message = "Name is invalid")
 	public String name;
 
-	@Min(value = 20000, message = "salary should be in between 20000-50000")
-	@Max(value = 500000, message = "salary should be in between 20000-50000")
+	@Min(value = 200000, message = "salary should be in between 200000-600000")
+	@Max(value = 600000, message = "salary should be in between 200000-600000")
 	public Double salary;
 	
 	@Pattern(regexp = "male|female", message = "Gender needs to be male/female")

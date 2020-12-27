@@ -39,7 +39,7 @@ public class GlobalExceptionHandler {
 	
 	@ExceptionHandler(HttpMessageNotReadableException.class)
 	public ResponseEntity<ResponseDTO> handleHttpMessageNotReadableException(HttpMessageNotReadableException exception){
-		ResponseDTO respDTO = new ResponseDTO(message, "Should have date in format dd MM yyyy");
+		ResponseDTO respDTO = new ResponseDTO(message, exception.getMessage());
 		return new ResponseEntity<ResponseDTO>(respDTO, HttpStatus.BAD_REQUEST);
 	}
 }

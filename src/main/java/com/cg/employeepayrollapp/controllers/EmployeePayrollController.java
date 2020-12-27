@@ -30,7 +30,7 @@ public class EmployeePayrollController {
 	@Autowired
 	private IEmployeePayrollService employeePayrollService;
 
-	@RequestMapping(value = { "", "/", "/get" })
+	@GetMapping(value = { "", "/", "/get" })
 	public ResponseEntity<ResponseDTO> getEmployeePayrollData() {
 		List<EmployeePayrollData> empDataList = employeePayrollService.getAllEmployeePayrollData();
 		ResponseDTO respDTO = new ResponseDTO("Get Call Successful", empDataList);
